@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="Trabalho Pratico de TW" />
+    <meta name="author" content="João Paulo Faria Miranda" />
+
+    <title>Trabalho Pratico 1</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="vendor/simple-line-icons/css/simple-line-icons.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Muli"
+      rel="stylesheet"
+    />
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="device-mockups/device-mockups.min.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="css/new-age.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.css" />
+    <script src="./bootstrap/js/bootstrap.js"></script>
+
+    <link
+      rel="shortcut icon"
+      href="../TrabalhoUm/img/SARS-CoV-2_COVID-19.png"
+    />
+  </head>
+
+  <body id="page-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"
+          >Trabalho Prático João Miranda</a
+        >
+        <button
+          class="navbar-toggler navbar-toggler-right"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#Headere">Pesquisa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#features">Imagens</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#Maps">Wuhan</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#Numero"
+                >Curiosidade</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- !!!!!!!!!NOTA!!!!!!!!!
+      Caso não dê para ver as imagens com o Live Server:
+      style="background-image: url(../img/COVID19_1920x1200.jpg)" -->
+
+    <!--Secção "Pesquisa" 
+        Secção onde o utilizador pesquisará informações sobre um país, obtendo assim,
+        dados metreológicos e dados sobre o covid nesse páis
+        O input desta pesquisa será usado na secção de "Imagens"
+        Além disso é disponibilizado um video de animação sobre o Covid
+        (Usa a "OpenWeather Api", "M-Media-Group Covid-19-API" e "YOUTUBE API")-->
+    <header
+      class="masthead text-center bg-dark text-black d-flex"
+      style="background-image: url(../TrabalhoUm/img/COVID19_1920x1200.jpg)"
+      id="Headere"
+    >
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-12 mx-auto">
+            <h1 class="text-warning">
+              <strong>Pesquisa</strong>
+            </h1>
+          </div>
+          <div class="col-lg-12 mx-auto">
+            <p class="p-3 mb-2 bg-gradient-success text-white">
+              Pesquise por um País (com o nome em Inglês) para saber todos os
+              dados de meteorologia, informação de casos e mortes por infeção de
+              COVID-19!
+            </p>
+            <p class="p-3 mb-2 bg-gradient-success text-white">
+              Exemplos de pesquisa : Brazil, Spain, Germany, ...
+            </p>
+
+            <div class="col-lg-12 mx-auto text-center" id="controlo">
+              <input
+                type="search"
+                id="searchMetodo"
+                class="form-control marg"
+                placeholder="Nome de um País"
+              />
+              <p></p>
+              <button
+                class="btn btn-light btn-xl"
+                id="submitMetodo"
+                onclick="searchMeteo();"
+              >
+                Pesquisar
+              </button>
+              <p></p>
+              <div id="meteo" class="text-light bg-dark" back></div>
+              <p></p>
+              <div id="player"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!--Secção "Imagens" 
+        Permite ao utilizador pesquisar imagens relacionadas com o Covid-19 sobre
+        o país anteriormente pesquisado
+        (Usa a "Pixabay API")-->
+    <section class="p-3 bg-dark text-white" id="features">
+      <div class="container">
+        <div class="section-heading text-center">
+          <h2 class="text-warning"><strong>Imagens</strong></h2>
+          <p class="text-muted-white">
+            Imagens relacionadas com o covid no país pesquisado.
+          </p>
+          <button
+            class="btn btn-light btn-xl"
+            id="submitImages"
+            onclick="searchImagens();"
+          >
+            Pesquisar Imagens
+          </button>
+          <p></p>
+          <div id="photos"></div>
+        </div>
+      </div>
+    </section>
+
+    <!--Secção "Wuhan" 
+        Mostra ao utilizador a ligação de Wuhan e o Covid-19, assim como um Mapa da região
+        com um marcador sobre o famoso mercado de Wuhan
+        (Usa a "Google Maps Api")-->
+    <section
+      class="p-3 bg-dark text-white"
+      id="Maps"
+      style="
+        background-image: url(../TrabalhoUm/img/merlin_167788791_dff3a28f-637e-4e89-a0b6-d8ca57ebf043-superJumbo.jpg);
+      "
+    >
+      <div class="container">
+        <div class="section-heading text-center">
+          <h2 class="text-warning"><strong>Wuhan</strong></h2>
+          <p class="text-white bg-dark">
+            A pandemia de coronavírus é uma pandemia em curso de COVID-19, uma
+            doença respiratória causada pelo coronavírus da síndrome
+            respiratória aguda grave 2 (SARS-CoV-2). O vírus tem origem
+            zoonótica e o primeiro caso conhecido da doença remonta a dezembro
+            de 2019 em Wuhan, na China.
+          </p>
+          <div id="mapa"></div>
+        </div>
+      </div>
+    </section>
+
+    <!--Secção "Curiosidade" 
+        Revela ao utilizador o nº do dia e como este se escreve em mandarim
+        (Usa a "Numbers Number of the day API")-->
+    <section class="p-3 bg-dark text-white" id="Numero">
+      <div class="container">
+        <div class="section-heading text-center">
+          <h2 class="text-warning"><strong>¿ Curiosidade ?</strong></h2>
+          <p class="text-white bg-dark">↓ Número do dia ↓</p>
+          <button class="btn btn-light btn-xl" id="ObtemN">Descobrir</button>
+          <p></p>
+          <div id="DivN" class="text-light bg-dark" back></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer do website -->
+    <footer>
+      <div class="container">
+        <p>&copy;Tecnologias Web 2020/2021</p>
+        <p>João Miranda nº23416</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/new-age.min.js"></script>
+
+    <!-- Google Maps Api -->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi5PRzNUpu6h_ebs3x317OCxcArMOj0GI&callback=inicializar"
+    ></script>
+  </body>
+
+  <script>
+    ////////////////////////////////////////////
+    var bsearch = document.getElementById("submitMetodo");
+    bsearch.addEventListener("click", obterCovid);
+    var asearch = document.getElementById("ObtemN");
+    asearch.addEventListener("click", obterNumber);
+    //Permite que o botão da secção "Curiosidade" seja clickável apenas uma vez
+    document.getElementById("ObtemN").onclick = function () {
+      this.disabled = true;
+    };
+    ///////////////////////////////////////////
+
+    //Google Maps Api
+    function inicializar() {
+      //coordenadas do centro do mapa
+      var coordenadas = { lat: 30.585956, lng: 114.329976 };
+      var mapa = new google.maps.Map(document.getElementById("mapa"), {
+        zoom: 10,
+        center: coordenadas,
+      });
+      //coordenadas do marcador do mapa -> Mercado de Wuhan
+      var coordenadasMercado = { lat: 30.617132, lng: 114.262369 };
+      var marker = new google.maps.Marker({
+        position: coordenadasMercado,
+        map: mapa,
+        title: "Meu marcador",
+        label: "Mercado de Wuhan",
+      });
+    }
+
+    //OpenWeather Api
+    const searchMeteo = () => {
+      // inputs da dom para depois fazer a pesquisa
+      const searchMeteo = $("#searchMetodo");
+      const submitFlickrMeteo = $("#submitMetodo");
+
+      if (searchMeteo.val() === "") return;
+
+      // disable inputs
+      searchMeteo.prop("disabled", true);
+      submitFlickrMeteo.attr("disabled", true).html("A carregar...");
+
+      // ajax request
+      const configs = {
+        url: "https://api.openweathermap.org/data/2.5/weather",
+        data: {
+          q: searchMeteo.val(),
+          appid: "a9e49b305a5d14cc0790dbf507251ca1",
+          units: "metric",
+        },
+        method: "GET",
+        dataType: "JSON",
+        success: (response) => {
+          console.log(response);
+          searchMeteo.prop("disabled", false);
+          submitFlickrMeteo.attr("disabled", false).html("Pesquisar");
+          const textotempo =
+            searchMeteo.val() +
+            " -> a temperatura atual é de " +
+            response.main.temp +
+            " ºC" +
+            " com máxima de " +
+            response.main.temp_max +
+            " ºC" +
+            ", e minima de " +
+            response.main.temp_min +
+            " ºC" +
+            ". O vento sopra a uma velociade de aproximadamente " +
+            response.wind.speed +
+            " km/h.";
+
+          //usar o textotempo como output desta função
+          $("#meteo").html(textotempo);
+        },
+      };
+
+      $.ajax(configs);
+    };
+
+    //M-Media-Group Covid-19-API
+    function obterCovid() {
+      var pesquisa = document.getElementById("searchMetodo").value;
+
+      var urlbase = "https://covid-api.mmediagroup.fr/v1/cases?";
+      var search = "country=" + pesquisa;
+
+      var url = urlbase + search;
+
+      console.log(url);
+
+      fetch(url)
+        .then(function (resposta) {
+          return resposta.json();
+        })
+        .then(function (dados) {
+          div = document.getElementById("meteo");
+          textocovid = document.createElement("p");
+          textocovid.innerHTML =
+            "Neste país houve um total de " +
+            dados.All.confirmed +
+            " infetados e o número de mortes atual é de " +
+            dados.All.deaths +
+            ".";
+          //usar o textocovid como output desta função
+          div.appendChild(textocovid);
+        });
+    }
+
+    //Numbers Number of the day API
+    function obterNumber() {
+      var url = "https://api.math.tools/numbers/nod";
+
+      console.log(url);
+
+      fetch(url)
+        .then(function (resposta) {
+          return resposta.json();
+        })
+        .then(function (dados) {
+          div = document.getElementById("DivN");
+          textonumero = document.createElement("p");
+          textonumero.innerHTML =
+            "O número do dia de hoje é " +
+            dados.contents.nod.numbers.id +
+            " !!!" +
+            " Este número em Wuhan escreve-se assim: " +
+            dados.contents.nod.numbers.numerals.chinese.display;
+          //usar o textonumero como output desta função
+          div.appendChild(textonumero);
+        });
+    }
+
+    //Pixabay API
+    const searchImagens = () => {
+      // inputs da dom para depois fazer a pesquisa
+      const search = $("#searchMetodo");
+      const submitFlickr = $("#submitImages");
+      $("#photos").html("");
+
+      if (search.val() === "") {
+        submitFlickr
+          .attr("disabled", false)
+          .html("Insira um país em Pesquisas");
+        return;
+      }
+
+      // disable inputs
+      search.prop("disabled", true);
+      submitFlickr.attr("disabled", true).html("A carregar...");
+
+      // ajax request
+      const configs = {
+        url: "https://pixabay.com/api/",
+        data: {
+          key: "20978517-a548ca07151ee9bdbbef3b66c",
+          q: search.val() + " covid",
+          lang: "en",
+          safesearch: "true",
+          per_page: "7",
+        },
+        method: "GET",
+        dataType: "JSON",
+        success: (response) => {
+          console.log(response);
+          // enable inputs
+          search.prop("disabled", false);
+          submitFlickr.attr("disabled", false).html("Pesquisar Imagens");
+
+          // take response and render on screen
+          response.hits.forEach((payload) => {
+            const newImage = $("<img>").attr("src", payload.webformatURL);
+            $("#photos").append(newImage);
+          });
+        },
+      };
+
+      $.ajax(configs);
+    };
+
+    //YOUTUBE API
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement("script");
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player("player", {
+        height: "390",
+        width: "640",
+        videoId: "PSnSo9kYlH4",
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
+        },
+      });
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+      event.target.playVideo();
+    }
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    var done = false;
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING && !done) {
+        setTimeout(stopVideo, 6000);
+        done = true;
+      }
+    }
+    function stopVideo() {
+      player.stopVideo();
+    }
+  </script>
+
+  <style>
+    /*Estilo do Mapa*/
+    #mapa {
+      height: 300px;
+      width: 600px;
+      margin: auto;
+    }
+  </style>
+</html>
